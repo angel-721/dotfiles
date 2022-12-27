@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Rescales meda by given percent
+
+read -p "Enter % to rescale by : " SCALE
+
+for MEDIA in *
+do
+	convert $MEDIA -scale $SCALE $MEDIA
+done
+

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Break a .mp4 file into frames of png images
+
+for MP4 in *.mp4
+do
+	mkdir "$MP4-imgs"
+	ffmpeg -i "$MP4" ./"$MP4-imgs"/img%04d.png
+done 
+

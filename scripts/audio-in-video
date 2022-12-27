@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Quick script to stuff audio in a mp4 file
+
+ffmpeg -i *.mp4 -i *.aac -map 0:v -map 1:a -c:v copy -shortest outputaudio.mp4

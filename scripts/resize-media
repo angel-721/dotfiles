@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Resize given media type to input W and H
+
+read -p "Enter file type to rescale: " TYPE
+read -p "Enter Width: " WIDTH
+read -p "Enter Height: " HEIGHT
+
+for IMAGE in *.$TYPE
+do
+	convert $IMAGE -resize $Widthx$HEIGHT $IMAGE
+done

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Quick script for turning png frames into a mp4 file
+# Use in a folder that only has png files with numbered frames
+ 
+first=$(ls | head -n 1)
+x=$(identify -format '%w' $first)
+y=$(identify -format '%h' $first)
+
+ffmpeg -framerate 30 -pattern_type glob -i '*.png' -c:v libx264 -r 30 -pix_fmt yuv420p -vf scale=$x:$y output.mp4

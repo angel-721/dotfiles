@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Get audio from video
+# Must be a mp4 video
+
+for mp4 in *.mp4
+do
+	ffmpeg -i "$mp4" -vn -acodec copy "$mp4".aac
+done 
+

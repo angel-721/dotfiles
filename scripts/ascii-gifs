@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Loops through .gif files to break them into frames, converts each frame to ascii text, prints out the ascii text then turns them into a gif
+# Have a full screen terminal and smaller font size when running this command for best results 
+
+mkdir ./asciigifs/
+for GIF in *.gif
+do
+	mkdir "$GIF-gif"
+	convert -coalesce $GIF ./"$GIF-gif"/"$GIF.jpg"
+	cd ./$GIF-gif 
+	jasciiimage
+	screenshotjascii 
+	convert -resize 1920x1080 -delay 25 *.png ../asciigifs/"$GIF"_ascii.gif
+	cd ..
+	rm -rf ./"$GIF-gif"/
+done 

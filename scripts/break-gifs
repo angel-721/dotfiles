@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Simple script to break gif into pngs and remove .gif files
+
+for GIF in *.gif
+do
+	mkdir "$GIF"-png
+	convert -coalesce "$GIF" "$GIF"-png/"$GIF".png
+done
+rm *.gif

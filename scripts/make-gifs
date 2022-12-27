@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Turn folders of matching FRAME png files into gifs
+
+mkdir ../gifs
+for DIR in */
+do
+	cd "$DIR"
+	# Read the image resolution
+	FIRST=$(ls | head -n 1)
+	X=$(identify -format '%w' $FIRST)
+	Y=$(identify -format '%h' $FIRST)
+	RES=""$X"x"$Y""
+	# echo $RES
+	# Compute the FPS for the gif files
+	FRAMES=$(ls | wc -l)
+	FRAME_COUNT=$(($FRAMES - 1))
+	FRAME=$((($FRAME_COUNT) * 10))
+	FPS=$((($FRAME) - 4))
+	# Create and name the gif file
+	convert -resize $RES -coalesce -delay 25 -dispose Background *.png "output.gif"
+	NAME="$(basename -- "$DIR")"
+	mv output.gif  "$NAME.gif"
+	mv *.gif ../../gifs
+	cd ..
+	echo "$DIR"
+done
+mv ../gifs ./gifs

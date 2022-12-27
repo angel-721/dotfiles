@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#reads every .txt and the screenshots after every read
+
+for txt in *.txt
+do
+	cat $txt
+	sleep 0.1
+	scrot ./"$txt"_ascii.png
+	clear
+done

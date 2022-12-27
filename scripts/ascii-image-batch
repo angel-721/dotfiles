@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Quick script to turn png files into ascii images
+# NOT COMPLETE
+
+for IMAGE in *.png
+do
+	jp2a "$IMAGE" --color -f --term-fit --background=dark | cat > ./"$IMAGE".txt
+	screenshotjascii 
+done 
+rm *.txt
