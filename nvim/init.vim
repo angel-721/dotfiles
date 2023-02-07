@@ -1,10 +1,28 @@
-set termguicolors
+:set termguicolors
 :set number
-":highlight Normal ctermbg=Black
 :colorscheme cyberpunk
-syntax on
-filetype plugin indent on
-
+:syntax on
+:syntax enable
+:filetype plugin indent on
+:set lazyredraw
+:set ttyfast
+:syntax sync fromstart
+:set autoindent
+:set nowrap
+:set smartindent
+:set ruler				
+:set lbr			
+:set tw=80
+:set fo+=t
+:set nocursorcolumn
+:set nocursorline
+:set nojoinspaces
+:set hlsearch
+:set incsearch			
+:set showmatch
+:set textwidth=80
+:autocmd BufNewFile,BufRead *.txt,*.tex,*.md setlocal spell spelllang=en_us
+:autocmd BufWritePre * :%s/\s\+$//e
 " PLUGINS "
 "
 "
@@ -22,11 +40,18 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'rhysd/vim-grammarous'
+Plug 'chrisbra/csv.vim'
 call plug#end()
 
 
 
 " COC "
+"
+"
+"
 "
 "
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
@@ -71,7 +96,6 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-
 "Snippets"
 "
 "
