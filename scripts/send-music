@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# mv ~/*.mp3 ./
+# mv ~/*.wav ./
+# mv ~/*.ogg ./
+# mv ~/*.opus ./
+mv ~/*.flac ./

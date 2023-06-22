@@ -1,0 +1,15 @@
+#!/bin/bash
+
+read -p "Enter number of horizontal splits : " XSCALE
+read -p "Enter number of vertical splits : " YSCALE
+X=$(identify -format '%w' $1)
+Y=$(identify -format '%h' $1)
+echo $X
+NAME="$(basename -- "$1")"
+RES=""$X"x"$Y""
+
+
+SCALE=""$XSCALE"x"$YSCALE""
+
+montage *.png -tile $SCALE -geometry $RES+0+0 sheet.png
+

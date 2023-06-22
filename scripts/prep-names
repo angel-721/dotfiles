@@ -1,0 +1,8 @@
+#!/bin/bash
+
+I=1
+for FILE in *.png
+do
+    mv $FILE "image$I.png"
+    I=$(($I+1))
+done

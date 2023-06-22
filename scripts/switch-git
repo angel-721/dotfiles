@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ $1 == "angel" ]]; then
+    git config --global user.name "angel-721"
+    git config --global user.email "angelvelasquez2002@gmail.com"
+fi
+
+if [[ $1 == "funky" ]]; then
+    git config --global user.name "aspiring-aster"
+    git config --global user.email "thefunkbender@gmail.com"
+fi
+
+git config --list

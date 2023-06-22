@@ -1,0 +1,3 @@
+#!/bin/bash
+
+spotdl $1 --format flac --lyrics genius --audio youtube-music
