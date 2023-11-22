@@ -1,6 +1,6 @@
 :set termguicolors
 :set number
-:colorscheme cyberpunk
+:colorscheme strawberry-light
 :syntax on
 :syntax enable
 :filetype plugin indent on
@@ -10,15 +10,17 @@
 :set autoindent
 :set nowrap
 :set smartindent
-:set ruler				
-:set lbr			
+:set ruler
+:set lbr
+:set ts=2
+:set sw=2
 :set tw=80
 :set fo+=t
 :set nocursorcolumn
 :set nocursorline
 :set nojoinspaces
 :set hlsearch
-:set incsearch			
+:set incsearch
 :set showmatch
 :set textwidth=80
 :autocmd BufNewFile,BufRead *.txt,*.tex,*.md setlocal spell spelllang=en_us
@@ -26,7 +28,7 @@
 " PLUGINS "
 "
 "
-" 
+"
 "
 "
 "
@@ -36,7 +38,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
@@ -44,6 +47,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/vim-grammarous'
 Plug 'chrisbra/csv.vim'
+Plug 'github/copilot.vim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'tpope/vim-cucumber'
 call plug#end()
 
 
@@ -102,3 +108,14 @@ endif
 "
 imap <C-l> <Plug>(coc-snippets-expand)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+
+
+
+
+
+"
+" FILE TYPE
+"
+"
+autocmd FileType python setlocal sw=4 ts=4
