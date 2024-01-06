@@ -15,6 +15,7 @@
 :set ts=2
 :set sw=2
 :set tw=80
+:set colorcolumn=80
 :set fo+=t
 :set nocursorcolumn
 :set nocursorline
@@ -23,13 +24,16 @@
 :set incsearch
 :set showmatch
 :set textwidth=80
+:set shell=bash
+:set shellcmdflag=-lc
 :autocmd BufNewFile,BufRead *.txt,*.tex,*.md setlocal spell spelllang=en_us
 :autocmd BufWritePre * :%s/\s\+$//e
+
+
+
+"
+"
 " PLUGINS "
-"
-"
-"
-"
 "
 "
 call plug#begin()
@@ -47,18 +51,50 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/vim-grammarous'
 Plug 'chrisbra/csv.vim'
-Plug 'github/copilot.vim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'tpope/vim-cucumber'
+Plug 'alaviss/nim.nvim'
+Plug 'ericvw/vim-nim'
+Plug 'nvimdev/guard-collection'
+Plug 'nvimdev/guard.nvim'
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next','do': 'bash install.sh' }
+Plug 'dense-analysis/ale'
+Plug 'cuducos/yaml.nvim'
+Plug 'elzr/vim-json'
 call plug#end()
 
 
 
+"
+"
+" NIMLINT "
+"
+"
+let g:ale_sign_error                  = '✘'
+let g:ale_sign_warning                = '⚠'
+highlight ALEErrorSign ctermbg        =NONE ctermfg=red
+highlight ALEWarningSign ctermbg      =NONE ctermfg=yellow
+let g:ale_linters_explicit            = 1
+let g:ale_lint_on_text_changed        = 'never'
+let g:ale_lint_on_enter               = 0
+let g:ale_lint_on_save                = 1
+let g:ale_fix_on_save                 = 1
+
+let g:ale_linters = {
+\   'nim':      ['nimlsp', 'nimcheck'],
+\}
+
+let g:ale_fixers = {
+\   'nim':      ['nimpretty'],
+\   '*':        ['remove_trailing_lines', 'trim_whitespace'],
+\}
+
+
+
+"
+"
 " COC "
-"
-"
-"
-"
 "
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
@@ -111,11 +147,46 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 
 
-
-
-
 "
 " FILE TYPE
 "
 "
 autocmd FileType python setlocal sw=4 ts=4
+
+
+
+"
+" LUA
+"
+"
+
+lua <<EOF
+
+--
+-- TREESITTER
+--
+require('nvim-treesitter.configs').setup {
+	ensure_installed = {"nim", "cpp", "python", "javascript"},
+  hightlight = { enable = true },
+  indent = { enable = true }
+}
+
+
+--
+-- GUARD
+--
+local ft = require('guard.filetype')
+
+ft('cpp'):fmt('clang-format')
+       :lint('clang-tidy')
+
+ft('typescript,javascript,typescriptreact, html, css, markdown'):fmt('prettier')
+
+-- Call setup() LAST!
+require('guard').setup({
+    -- the only options for the setup function
+    fmt_on_save = true,
+    -- Use lsp if no formatter was defined for this filetype
+    lsp_as_default_formatter = false,
+})
+EOF

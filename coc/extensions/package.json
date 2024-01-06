@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "coc-pyright": ">=1.1.339",
+    "coc-clangd": ">=0.29.3",
+    "coc-markdownlint": ">=1.32.1"
+  },
+  "lastUpdate": 1702103883859
+}
