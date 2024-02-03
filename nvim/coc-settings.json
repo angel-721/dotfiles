@@ -4,5 +4,9 @@
 	    "command": "nimlsp",
 	    "filetypes": ["nim"]
 	  }
-	}
+  },
+  "snippets.ultisnips.pythonPrompt": false,
+  "coc.source.vimtex.filetypes": [
+    "tex"
+  ]
 }

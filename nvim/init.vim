@@ -28,12 +28,12 @@
 :set shellcmdflag=-lc
 :autocmd BufNewFile,BufRead *.txt,*.tex,*.md setlocal spell spelllang=en_us
 :autocmd BufWritePre * :%s/\s\+$//e
+" :autocmd BufWritePost, *.tex !pdftex <afile>
+:autocmd BufWritePost, *.html,*.js,*.css Prettier
 
 
 
-"
-"
-" PLUGINS "
+"PLUGINS "
 "
 "
 call plug#begin()
@@ -62,6 +62,11 @@ Plug 'autozimu/LanguageClient-neovim', {'branch': 'next','do': 'bash install.sh'
 Plug 'dense-analysis/ale'
 Plug 'cuducos/yaml.nvim'
 Plug 'elzr/vim-json'
+Plug 'lervag/vimtex'
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 call plug#end()
 
 
@@ -91,7 +96,42 @@ let g:ale_fixers = {
 \}
 
 
+"
+"
+" VIMTEXT "
+"
+" This is necessary for VimTeX to load properly. The "indent" is optional.
+" Note that most plugin managers will do this automatically.
+filetype plugin indent on
 
+" This enables Vim's and neovim's syntax-related features. Without this, some
+" VimTeX features will not work (see ":help vimtex-requirements" for more
+" info).
+syntax enable
+
+" Viewer options: One may configure the viewer either by specifying a built-in
+" viewer method:
+let g:vimtex_view_method = 'zathura'
+
+" Or with a generic interface:
+let g:vimtex_view_general_viewer = 'okular'
+let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+
+" VimTeX uses latexmk as the default compiler backend. If you use it, which is
+" strongly recommended, you probably don't need to configure anything. If you
+" want another compiler backend, you can change it as follows. The list of
+" supported backends and further explanation is provided in the documentation,
+" see ":help vimtex-compiler".
+let g:vimtex_compiler_method = 'latexrun'
+
+" Most VimTeX mappings rely on localleader and this can be changed with the
+" following line. The default is usually fine and is the symbol "\".
+let maplocalleader = ",""
+"
+"
+"
+
+"
 "
 "
 " COC "
@@ -180,7 +220,7 @@ local ft = require('guard.filetype')
 ft('cpp'):fmt('clang-format')
        :lint('clang-tidy')
 
-ft('typescript,javascript,typescriptreact, html, css, markdown'):fmt('prettier')
+--- ft('typescript,javascript,typescriptreact, html, css, markdown'):fmt('prettier')
 
 -- Call setup() LAST!
 require('guard').setup({
