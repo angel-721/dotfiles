@@ -1,0 +1,17 @@
+{
+	"inlayHint.enable": true,
+	"semanticTokens.enable": true,
+
+	"languageserver": {
+	  "nim": {
+	    "command": "nimlsp",
+	    "filetypes": ["nim"]
+	  },
+	  "zls": {
+	    "command": "zls",
+	    "filetypes": ["zig", "zon"]
+	  },
+  },
+  "svelte.enable-ts-plugin": true,
+  "snippets.ultisnips.pythonPrompt": false,
+}
