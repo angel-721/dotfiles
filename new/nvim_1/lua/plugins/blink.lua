@@ -2,12 +2,14 @@ return {
   'saghen/blink.cmp',
   -- optional: provides snippets for the snippet source
   dependencies = { 'rafamadriz/friendly-snippets' },
+  --build = 'cargo +nightly build --release',
 
   -- use a release tag to download pre-built binaries
   version = '1.*',
+  -- version = '*',
   -- build = 'nix run .#build-plugin',
-  -- build = 'cargo +nightly build --release',
-  build = 'cargo build --release',
+  --build = 'cargo +nightly build --release',
+  -- build = 'cargo build --release',
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config

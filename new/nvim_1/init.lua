@@ -30,6 +30,21 @@ local function setup_lsp_diags()
   )
 end
 
+vim.diagnostic.config({
+  virtual_text = true, -- Shows diagnostics inline with code
+  signs = true, -- Displays signs (e.g., error markers) in the gutter
+  underline = true, -- Underlines diagnostics in the code
+  update_in_insert = false, -- Prevents updating diagnostics while in insert mode
+  severity_sort = true, -- Sorts diagnostics by severity for better visibility
+})
+
+-- -- LSPs
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('cssls')
+vim.lsp.enable('htmx')
+vim.lsp.enable('html')
+vim.lsp.enable('basedpyright')
 
 -- Load after loading plugin
 vim.cmd.colorscheme "catppuccin-mocha"
