@@ -7,6 +7,8 @@ vim.o.termguicolors = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
+vim.opt.spell = true
+vim.opt.spelllang = 'en_us'
 
 
 -- key mappings -- 
@@ -35,6 +37,8 @@ vim.lsp.enable('htmx')
 vim.lsp.enable('html')
 vim.lsp.enable('basedpyright')
 vim.lsp.enable('svelte')
+vim.lsp.enable('gopls')
+vim.lsp.enable('tailwindcss')
 
 -- Load after loading plugin
 vim.cmd.colorscheme "catppuccin-mocha"
