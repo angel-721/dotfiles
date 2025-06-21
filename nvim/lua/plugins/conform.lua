@@ -14,6 +14,7 @@ return {
       cpp = { "clang-format" },
       zig = { "zigfmt" },
       rust = { "rustfmt" },
+			go = {"gofmt"},
       ["*"] = { "codespell" },
     },
 
@@ -28,25 +29,13 @@ return {
           tabWidth = 2,
           useTabs = false,
           semi = true,
-          singleQuote = false,
+          singleQuote = true,
           trailingComma = "es5",
           bracketSpacing = true,
-          jsxSingleQuote = false,
+          jsxSingleQuote = true,
           jsxBracketSameLine = false,
         }
       },
-      prettier = {
-        options = {
-          tabWidth = 2,
-          useTabs = false,
-          semi = true,
-          singleQuote = false,
-          trailingComma = "es5",
-          bracketSpacing = true,
-          jsxSingleQuote = false,
-          jsxBracketSameLine = false,
-        }
-      },
-    },
-  }
+  	}
+	}
 }

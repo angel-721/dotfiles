@@ -1,7 +1,7 @@
 vim.o.number = true
 vim.o.signcolumn = 'yes'
--- vim.o.tabstop = 2
--- vim.o.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
 vim.o.updatetime = 300
 vim.o.termguicolors = true
 vim.g.loaded_netrw = 1
@@ -14,6 +14,11 @@ vim.opt.spelllang = 'en_us'
 -- key mappings -- 
 
 vim.keymap.set('n', 'vw', 'viw', { noremap = true })
+vim.keymap.set('n', '<C-H>', '<C-W>h', { noremap = true })
+vim.keymap.set('n', '<C-J>', '<C-W>j', { noremap = true })
+vim.keymap.set('n', '<C-K>', '<C-W>k', { noremap = true })
+vim.keymap.set('n', '<C-L>', '<C-W>l', { noremap = true })
+
 
 require("config.lazy")
 
