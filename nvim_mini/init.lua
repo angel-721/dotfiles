@@ -71,7 +71,19 @@ now(function()
     vim.cmd('Pick grep_live')
   end, { desc = 'Pick Live Grep' })
   
-  require('mini.starter').setup()
+	local starter = require('mini.starter')
+  starter.setup({
+    items = {
+			starter.sections.pick()
+    },
+  })
+  require('mini.files').setup()
+  require('mini.notify').setup()
+  require('mini.icons').setup({
+	})
+	require('mini.statusline').setup({
+		use_icons = true
+	})
 end)
 
 -- ========= Defer LSP and completion until needed =========
@@ -88,39 +100,21 @@ later(function()
     vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
   end
   vim.api.nvim_create_autocmd('LspAttach', { callback = on_attach })
-
-  -- Enable LSP servers only when needed
-  local lsp_servers = {
-    'rust_analyzer',
-    'ts_ls',
-    'cssls',
-    'html',
-    'basedpyright',
-    'gopls',
-    'tailwindcss',
-  }
   
-  -- Only enable LSP for specific filetypes
-  local filetype_to_lsp = {
-    rust = { 'rust_analyzer' },
-    typescript = { 'ts_ls', 'tailwindcss' },
-    typescriptreact = { 'ts_ls', 'tailwindcss' },
-    javascript = { 'ts_ls', 'tailwindcss' },
-    javascriptreact = { 'ts_ls', 'tailwindcss' },
-    css = { 'cssls', 'tailwindcss' },
-    html = { 'html', 'tailwindcss' },
-    python = { 'basedpyright' },
-    go = { 'gopls' },
-  }
-  
-  vim.api.nvim_create_autocmd('FileType', {
-    callback = function(args)
-      local servers = filetype_to_lsp[args.match]
-      if servers then
-        vim.lsp.enable(servers)
-      end
-    end,
-  })
+	vim.lsp.enable({
+		"rust_analyzer",
+		"gopls",
+		"basedpyright",
+		"html",
+		"cssls",
+		"ts_ls",
+		"tailwindcss",
+		"csharp_ls",
+		"svelte",
+		"astro",
+		"marksman",
+		"harper"
+	})
   
   vim.lsp.set_log_level("off")
 end)
@@ -141,7 +135,7 @@ later(function()
   local treesitter_filetypes = {
     'javascript', 'typescript', 'javascriptreact', 'typescriptreact',
     'html', 'css', 'json', 'lua', 'python', 'rust', 'go',
-    'markdown', 'yaml', 'toml', 'vim', 'bash', 'sh'
+    'markdown', 'yaml', 'toml', 'vim', 'bash', 'sh', 'cs', "svelte", "astro", "cpp", "vue"
   }
   
 	-- Only load treesitter when I need it
@@ -165,7 +159,7 @@ later(function()
     vim.g.matchup_matchparen_offscreen = { method = "popup" }
     
     require('nvim-treesitter.configs').setup({
-      ensure_installed = {  },
+      ensure_installed = { },
       highlight = { enable = true },
       matchup = {
         enable = true,
@@ -181,6 +175,20 @@ later(function()
     callback = setup_treesitter,
   })
 end)
+
+-- Markdown
+later(function()
+	add({source = "tadmccorkle/markdown.nvim"})
+		require("markdown").setup({})
+	add({source = "tadmccorkle/markdown.nvim"})
+		require("markdown").setup({
+	     -- configuration here or empty for defaults
+	   })
+
+	add({source = "MeanderingProgrammer/render-markdown.nvim"})
+	require('render-markdown').setup({})
+end)
+
 -- ========= Autotag only for specific filetypes =========
 later(function()
   add({
@@ -191,7 +199,7 @@ later(function()
   -- Only set up autotag when we encounter relevant filetypes
   local autotag_filetypes = {
     'html', 'xml', 'javascript', 'typescript', 
-    'javascriptreact', 'typescriptreact', 'vue', 'svelte'
+    'javascriptreact', 'typescriptreact', 'vue', 'svelte', 'astro'
   }
   
   local autotag_setup = false
@@ -231,10 +239,25 @@ later(function()
       css = { "prettierd" },
       html = { "prettierd" },
       json = { "prettierd" },
+			rust = { "rustfmt" },
+			cs = { "csharpier" }, 
+			go = { "gofmt" },
+			python = { "ruff_fix", "ruff_format", "ruff_organize_imports" }
     },
     format_on_save = {
       timeout_ms = 500,
+			lsp_format = "fallback"
     },
+		formatters = {
+			csharpier = {
+				command = "csharpier",
+				args = {
+					"format",
+					"--write-stdout",
+				},
+				to_stdin = true,
+			}
+		}
   })
 end)
 
@@ -244,6 +267,7 @@ later(function()
   vim.cmd.colorscheme "catppuccin"
 end)
 
+
 -- ========= Mini modules =========
 later(function()
   require('mini.pairs').setup()
@@ -251,4 +275,6 @@ later(function()
   require('mini.diff').setup()
   require('mini.surround').setup()
   require('mini.align').setup()
+  require('mini.visits').setup()
+  require('mini.extra').setup()
 end)
